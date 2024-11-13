@@ -1,0 +1,11 @@
+<form action="{{BASE}}{{options.process}}" method="POST">
+	<div class="mb-3">
+		<label for="nombre" class="form-label">Rol <span class="text-danger">*</span> </label>
+		<input name="nombre" type="text" value="{{options.role.nombre|default("")}}" class="form-control" id="nombre" aria-describedby="nombre">
+		<div id="nombre" class="form-text text-danger">Ingresa el nombre del rol</div>
+	</div>
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="send" value="{{options.send}}">
+	<button type="submit" class="btn btn-primary">Guardar</button>
+	<a href="{{BASE}}roles" class="btn btn-link">Volver</a>
+</form>
