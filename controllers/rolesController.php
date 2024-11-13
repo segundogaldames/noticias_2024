@@ -1,4 +1,5 @@
 <?php
+use models\Role;
 
 class rolesController extends Controller
 {
@@ -9,8 +10,16 @@ class rolesController extends Controller
 
     public function index()
     {
+        list($msg_success, $msg_error) = $this->getMessages();
 
-        $this->_view->load('roles/index');
+        $options = [
+            'title' => 'Roles',
+            'subject' => 'Lista de Roles',
+            'roles' => Role::select('id','nombre')->get(), #SElECT id, nombre FROM roles;
+            'warning' => 'No hay roles registrados'
+        ];
+
+        $this->_view->load('roles/index', compact('options','msg_success','msg_error'));
     }
 
 }
