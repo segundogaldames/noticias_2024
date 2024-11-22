@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 {{options.subject}}
@@ -12,25 +12,35 @@
             </div>
             <div class="card-body">
                 {% include "partials/_messages.twig" %}
-                {% if options.roles is not empty %}
+                {% if options.usuarios is not empty %}
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="col-2">Id</th>
-                                <th class="col-8">Rol</th>
+                                <th class="col-4">Nombre</th>
+                                <th class="col-2">Rol</th>
+                                <th class="col-2">Estado</th>
                                 <th class="col-2">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for model in options.roles %}
+                            {% for model in options.usuarios %}
                                 <tr>
                                     <td>{{model.id}} </td>
                                     <td>{{model.nombre}} </td>
+                                    <td>{{model.role.nombre}} </td>
                                     <td>
-                                        <a href="{{BASE}}roles/show/{{model.id}}" class="btn btn-success btn-sm">
+                                        {% if model.activo == 1 %}
+                                            <span class="badge rounded-pill text-bg-success">Activo</span>
+                                        {% else %}
+                                            <span class="badge rounded-pill text-bg-warning">Inactivo</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{BASE}}usuarios/show/{{model.id}}" class="btn btn-success btn-sm">
                                         {% include "partials/_button_view.twig" %}
                                         </a>
-                                        <a href="{{BASE}}roles/edit/{{model.id}}" class="btn btn-warning btn-sm">
+                                        <a href="{{BASE}}usuarios/edit/{{model.id}}" class="btn btn-warning btn-sm">
                                             {% include "partials/_button_edit.twig" %}
                                         </a>
                                     </td>

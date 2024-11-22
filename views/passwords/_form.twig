@@ -1,0 +1,20 @@
+<form action="{{BASE}}{{options.process}}" method="post">
+    <div class="mb-3">
+        <label for="password" class="form-label">Password
+            <span class="text-danger">*</span>
+        </label>
+        <input name="password" type="password" class="form-control" id="password" aria-describedby="password">
+        <div id="password" class="form-text text-danger">Ingresa el password del usuario</div>
+    </div>
+    <div class="mb-3">
+        <label for="password_confirm" class="form-label">Confirmar Password
+            <span class="text-danger">*</span>
+        </label>
+        <input name="password_confirm" type="password" class="form-control" id="password_confirm" aria-describedby="password_confirm">
+        <div id="password_confirm" class="form-text text-danger">Reingresa el password del usuario</div>
+    </div>
+    <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="send" value="{{options.send}}">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="#" onclick="history.back();" class="btn btn-link">Volver</a>
+</form>

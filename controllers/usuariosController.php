@@ -18,7 +18,9 @@ class usuariosController extends Controller
             'subject' => 'Lista de Usuarios',
             'usuarios' => Usuario::with('role')->get(), 
             #SElECT * FROM roles join usuarios on usuarios.role_id = role.id;
-            'warning' => 'No hay usuarios registrados'
+            'warning' => 'No hay usuarios registrados',
+            'link_create' => 'usuarios/create',
+            'button_create' => 'Nuevo Usuario'
         ];
 
         $this->_view->load('usuarios/index', compact('options','msg_success','msg_error'));
@@ -34,7 +36,8 @@ class usuariosController extends Controller
             'usuario' => Session::get('data'),
             'action' => 'create',
             'send' => $this->encrypt($this->getForm()),
-            'process' => 'usuarios/store'
+            'process' => 'usuarios/store',
+            'roles' => Role::select('id','nombre')->orderBy('nombre')->get()
         ];
 
         $this->_view->load('usuarios/create', compact('options','msg_success','msg_error'));
@@ -50,6 +53,11 @@ class usuariosController extends Controller
             'password' => Filter::getText('password'),
             'role' => Filter::getText('role')
         ]);
+
+        if (!$this->validateRut(Filter::getText('run'))) {
+            Session::set('msg_error','El RUT ingresado no es válido');
+            $this->redirect('usuarios/create');
+        }
 
         #verificar que el largo del password sea igual o mayor que 8
         if (strlen(Filter::getText('password')) < 8) {
@@ -71,11 +79,13 @@ class usuariosController extends Controller
             $this->redirect('usuarios/create');
         }
 
+        $password = Helper::encryptPassword(Filter::getText('password'));
+
         $usuario = new Usuario;
         $usuario->run = Filter::getText('run');
         $usuario->nombre = Filter::getText('nombre');
         $usuario->email = Filter::getText('email');
-        $usuario->password = Filter::getText('password');
+        $usuario->password = $password;
         $usuario->activo = 2; #2 es igual a inactivo
         $usuario->role_id = Filter::getInt('role');
         $usuario->save();
@@ -112,7 +122,8 @@ class usuariosController extends Controller
             'usuario' => Usuario::with('role')->find(Filter::filterInt($id)),
             'action' => 'edit',
             'send' => $this->encrypt($this->getForm()),
-            'process' => "usuarios/update/{$id}"
+            'process' => "usuarios/update/{$id}",
+            'roles' => Role::select('id','nombre')->orderBy('nombre')->get()
         ];
 
         $this->_view->load('usuarios/edit', compact('options','msg_success','msg_error'));
@@ -120,6 +131,7 @@ class usuariosController extends Controller
 
     public function update($id = null)
     {
+        #print_r($_POST);exit;
         Validate::validateModel(Usuario::class, $id, 'error/error');
         $this->validatePUT();
 
@@ -130,11 +142,17 @@ class usuariosController extends Controller
             'role' => Filter::getText('role')
         ]);
 
+        if (!$this->validateRut(Filter::getText('run'))) {
+            Session::set('msg_error','El RUT ingresado no es válido');
+            $this->redirect('usuarios/edit/' . $id);
+        }
+
         $usuario = Usuario::find(Filter::filterInt($id));
         $usuario->run = Filter::getText('run');
         $usuario->nombre = Filter::getText('nombre');
         $usuario->activo = Filter::getInt('activo');
         $usuario->role_id = Filter::getInt('role');
+        $usuario->save();
 
         Session::destroy('data');
         Session::set('msg_success','El usuario se ha modificado correctamente');

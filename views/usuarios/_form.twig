@@ -1,0 +1,75 @@
+<form action="{{BASE}}{{options.process}}" method="POST">
+	<div class="mb-3">
+		<label for="run" class="form-label">RUT
+			<span class="text-danger">*</span>
+		</label>
+		<input name="run" type="text" value="{{options.usuario.run|default("")}}" class="form-control" id="nombre" aria-describedby="run">
+		<div id="run" class="form-text text-danger">Ingresa el RUT del usuario</div>
+	</div>
+	<div class="mb-3">
+		<label for="nombre" class="form-label">Nombre
+			<span class="text-danger">*</span>
+		</label>
+		<input name="nombre" type="text" value="{{options.usuario.nombre|default("")}}" class="form-control" id="nombre" aria-describedby="nombre">
+		<div id="nombre" class="form-text text-danger">Ingresa el nombre del usuario</div>
+	</div>
+	{% if options.action == 'create' %}
+		<div class="mb-3">
+			<label for="email" class="form-label">Email
+				<span class="text-danger">*</span>
+			</label>
+			<input name="email" type="email" value="{{options.usuario.email|default("")}}" class="form-control" id="email" aria-describedby="email">
+			<div id="email" class="form-text text-danger">Ingresa el email del usuario</div>
+		</div>
+	{% endif %}
+	
+    <div class="mb-3">
+        <label for="role">Rol</label>
+        <select name="role" id="role" class="form-control">
+			{% if options.action == 'edit' %}
+				<option value="{{options.usuario.role_id}}">{{options.usuario.role.nombre}} </option>
+			{% endif %}
+			
+            <option value="">Selecciona un rol...</option>
+            {% for role in options.roles %}
+                <option value="{{role.id}}">{{role.nombre}} </option>
+            {% endfor %}
+        </select>
+    </div>
+	{% if options.action == 'edit' %}
+		<div class="mb-3">
+			<label for="activo">Estado</label>
+			<select name="activo" id="activo" class="form-control">
+				{% if options.usuario.activo == 1 %}
+					<option value="{{options.usuario.activo}}">Activo</option>
+					<option value="2">Desactivar </option>
+				{% else %}
+					<option value="{{options.usuario.activo}}">Inactivo</option>
+					<option value="1">Activar</option>
+				{% endif %}
+			</select>
+		</div>
+	{% endif %}
+	
+	{% if options.action == 'create' %}
+		<div class="mb-3">
+			<label for="password" class="form-label">Password
+				<span class="text-danger">*</span>
+			</label>
+			<input name="password" type="password" class="form-control" id="password" aria-describedby="password">
+			<div id="password" class="form-text text-danger">Ingresa el password del usuario</div>
+		</div>
+		<div class="mb-3">
+			<label for="password_confirm" class="form-label">Confirmar Password
+				<span class="text-danger">*</span>
+			</label>
+			<input name="password_confirm" type="password" class="form-control" id="password_confirm" aria-describedby="password_confirm">
+			<div id="password_confirm" class="form-text text-danger">Reingresa el password del usuario</div>
+		</div>
+	{% endif %}
+	
+	<input type="hidden" name="_method" value="PUT">
+	<input type="hidden" name="send" value="{{options.send}}">
+	<button type="submit" class="btn btn-primary">Guardar</button>
+	<a href="#" onclick="history.back();" class="btn btn-link">Volver</a>
+</form>

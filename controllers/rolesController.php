@@ -17,7 +17,9 @@ class rolesController extends Controller
             'title' => 'Roles',
             'subject' => 'Lista de Roles',
             'roles' => Role::select('id','nombre')->orderBy('id','desc')->get(), #SElECT id, nombre FROM roles;
-            'warning' => 'No hay roles registrados'
+            'warning' => 'No hay roles registrados',
+            'link_create' => 'roles/create',
+            'button_create' => 'Nuevo Rol'
         ];
 
         $this->_view->load('roles/index', compact('options','msg_success','msg_error'));
