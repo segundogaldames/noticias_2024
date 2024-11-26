@@ -8,43 +8,44 @@
         <div class="card">
             <div class="card-header">
                 {{options.subject}}
-                {% if session.user_role == 'Administrador' %}
+                {% if session.user_role == 'Periodista' %}
                     <a href="{{BASE}}{{options.link_create}}" class="btn btn-outline-dark btn-sm">{{options.button_create}}</a>
                 {% endif %}
                 
             </div>
             <div class="card-body">
                 {% include "partials/_messages.twig" %}
-                {% if options.usuarios is not empty %}
+                {% if options.noticias is not empty %}
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th class="col-2">Id</th>
-                                <th class="col-4">Nombre</th>
-                                <th class="col-2">Rol</th>
+                                <th class="col-4">Título</th>
+                                <th class="col-2">Autor</th>
                                 <th class="col-2">Estado</th>
                                 <th class="col-2">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for model in options.usuarios %}
+                            {% for model in options.noticias %}
                                 <tr>
                                     <td>{{model.id}} </td>
-                                    <td>{{model.nombre}} </td>
-                                    <td>{{model.role.nombre}} </td>
+                                    <td>{{model.titulo}} </td>
+                                    <td>{{model.usuario.nombre}} </td>
                                     <td>
-                                        {% if model.activo == 1 %}
-                                            <span class="badge rounded-pill text-bg-success">Activo</span>
+                                        {% if model.vigente == 1 %}
+                                            <span class="badge text-bg-success">Publicado</span>
                                         {% else %}
-                                            <span class="badge rounded-pill text-bg-warning">Inactivo</span>
+                                            <span class="badge text-bg-warning">No Publicado</span>
                                         {% endif %}
+                                        
                                     </td>
                                     <td>
-                                        <a href="{{BASE}}usuarios/show/{{model.id}}" class="btn btn-success btn-sm">
+                                        <a href="{{BASE}}noticias/show/{{model.id}}" class="btn btn-success btn-sm">
                                         {% include "partials/_button_view.twig" %}
                                         </a>
-                                        {% if session.user_role == 'Administrador' %}
-                                            <a href="{{BASE}}usuarios/edit/{{model.id}}" class="btn btn-warning btn-sm">
+                                        {% if session.user_role == 'Periodista' %}
+                                            <a href="{{BASE}}noticias/edit/{{model.id}}" class="btn btn-warning btn-sm">
                                                 {% include "partials/_button_edit.twig" %}
                                             </a>
                                         {% endif %}

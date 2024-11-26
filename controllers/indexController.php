@@ -1,18 +1,26 @@
 <?php
 
+use models\Noticia;
+
 class indexController extends Controller
 {
 
-	public function __construct(){
-		// $this->verificarSession();
-		// Session::tiempo();
+	public function __construct()
+	{
 		parent::__construct();
 	}
 
 	public function index()
 	{
-		$this->getMessages();
+		list($msg_success, $msg_error) = $this->getMessages();
 
-		$this->_view->load('index/index');
+		$options = [
+            'title' => 'Noticias',
+            'subject' => 'Lista de Noticias',
+            'noticias' => Noticia::with('usuario')->where('vigente', 1)->get(),
+            'warning' => 'No hay noticias registradas',
+        ];
+
+        $this->_view->load('index/index', compact('options','msg_success','msg_error'));
 	}
 }

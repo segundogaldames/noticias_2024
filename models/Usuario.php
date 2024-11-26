@@ -14,4 +14,9 @@ class Usuario extends Model
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function noticias()
+    {
+        return $this->hasMany(Noticia::class);
+    }
 }

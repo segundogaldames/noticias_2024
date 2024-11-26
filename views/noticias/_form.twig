@@ -1,0 +1,35 @@
+<form action="{{BASE}}{{options.process}}" method="POST">
+	<div class="mb-3">
+		<label for="titulo" class="form-label">Título <span class="text-danger">*</span> </label>
+		<input name="titulo" type="text" value="{{options.noticia.titulo|default("")}}" class="form-control" id="titulo" aria-describedby="titulo">
+		<div id="titulo" class="form-text text-danger">Ingresa el titulo de la noticia</div>
+	</div>
+    <div class="mb-3">
+		<label for="descripcion" class="form-label">Descripción <span class="text-danger">*</span> </label>
+		<textarea name="descripcion" id="descripcion" class="form-control" rows="4" style="resize:none">
+            {{options.noticia.titulo|default("")}}
+        </textarea>
+		<div id="descripcion" class="form-text text-danger">Ingresa la descripción de la noticia</div>
+	</div>
+    {% if options.action == 'edit' %}
+        <div class="mb-3">
+            <label for="vigente" class="form-label">Estado <span class="text-danger">*</span> </label>
+            <select name="vigente" id="vigente" class="form-control">
+                {% if options.noticia.vigente == 1 %}
+                    <option value="{{options.noticia.vigente}}">Publicada</option>
+                    <option value="2">No Publicar</option>
+                {% else %}
+                    <option value="{{options.noticia.vigente}}">No Publicada</option>
+                    <option value="1">Publicar</option>
+                {% endif %}
+                
+            </select>
+            <div id="vigente" class="form-text text-danger">Selecciona el estado de la noticia</div>
+        </div>
+    {% endif %}
+    
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="send" value="{{options.send}}">
+	<button type="submit" class="btn btn-primary">Guardar</button>
+	<a href="{{BASE}}{{options.back}}" class="btn btn-link">Volver</a>
+</form>

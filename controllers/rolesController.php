@@ -39,7 +39,7 @@ class rolesController extends Controller
             'action' => 'create',
             'send' => $this->encrypt($this->getForm()),
             'process' => 'roles/store',
-            'back' => 'roles/index'
+            'back' => 'roles'
         ];
 
         $this->_view->load('roles/create', compact('options','msg_success','msg_error'));
@@ -79,7 +79,8 @@ class rolesController extends Controller
             'title' => 'Roles',
             'subject' => 'Detalle de Rol',
             'role' => Role::find(Filter::filterInt($id)),
-            'warning' => 'No hay un rol asociado'
+            'warning' => 'No hay un rol asociado',
+            'back' => 'roles'
         ];
 
         $this->_view->load('roles/show', compact('options','msg_success','msg_error'));
@@ -99,7 +100,7 @@ class rolesController extends Controller
             'action' => 'edit',
             'send' => $this->encrypt($this->getForm()),
             'process' => "roles/update/{$id}",
-            'back' => 'roles/index'
+            'back' => 'roles'
         ];
 
         $this->_view->load('roles/edit', compact('options','msg_success','msg_error'));

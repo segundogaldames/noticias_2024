@@ -59,7 +59,7 @@
                 
             </div>
             <p>
-                <a href="#" onclick="history.back();" class="btn btn-primary">Volver</a>
+                <a href="{{BASE}}{{options.back}}" class="btn btn-primary">Volver</a>
                 {% if session.user_role == 'Administrador' %}
                     <a href="{{BASE}}passwords/edit/{{options.usuario.id}}" class="btn btn-warning">Cambiar Password</a>
                 {% endif %}

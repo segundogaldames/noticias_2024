@@ -1,57 +1,27 @@
 {% extends "layout/default/template.twig" %}
-{% block title %}Bienvenidos{% endblock %}
+{% block title %}{{options.title}}{% endblock %}
 
 {% block content %}
     <div class="row">
-        <div class="col-md-3 mb-2">
-            <div class="card">
-                <img src="{{BASE}}public/img/noticia_1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        {% if options.noticias is not empty %}
+            {% for noticia in options.noticias %}
+                <div class="col-md-3 mb-2">
+                    <div class="card">
+                        <img src="{{BASE}}public/img/noticia_1.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{noticia.titulo}}</h5>
+                            <p class="card-text">
+                                {{noticia.descripcion}}
+                            </p>
+                            <a href="{{BASE}}noticias/noticia/{{noticia.ruta}}" class="btn btn-primary">Ver Detalle</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-2">
-            <div class="card">
-                <img src="{{BASE}}public/img/noticia_1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-2">
-            <div class="card">
-                <img src="{{BASE}}public/img/noticia_1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-2">
-            <div class="card">
-                <img src="{{BASE}}public/img/noticia_1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-2">
-            <div class="card">
-                <img src="{{BASE}}public/img/noticia_1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-info">{{options.warning}} </p>
+        {% endif %}
+        
+        
     </div>
 {% endblock %}

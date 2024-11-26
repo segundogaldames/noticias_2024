@@ -111,7 +111,8 @@ class usuariosController extends Controller
             'subject' => 'Detalle de Usuario',
             'usuario' => Usuario::with('role')->find(Filter::filterInt($id)), 
             #SElECT * FROM roles join usuarios on usuarios.role_id = role.id;
-            'warning' => 'No hay un usuario asociado'
+            'warning' => 'No hay un usuario asociado',
+            'back' => 'usuarios'
         ];
 
         $this->_view->load('usuarios/show', compact('options','msg_success','msg_error'));
