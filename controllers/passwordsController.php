@@ -6,11 +6,15 @@ class passwordsController extends Controller
 {
     public function __construct()
     {
+
         parent::__construct();
     }
 
     public function edit($id = null)
     {
+        $this->validateSession();
+        $this->validateRol(['Administrador']);
+
         Validate::validateModel(Usuario::class, $id, 'error/denied');
 
         list($msg_success, $msg_error) = $this->getMessages();
@@ -28,6 +32,9 @@ class passwordsController extends Controller
 
     public function update($id = null)
     {
+        $this->validateSession();
+        $this->validateRol(['Administrador']);
+        
         Validate::validateModel(Usuario::class, $id, 'error/denied');
         $this->validatePUT();
 

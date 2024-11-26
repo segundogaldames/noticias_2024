@@ -1,0 +1,27 @@
+{% extends "layout/default/template.twig" %}
+{% block title %}Bienvenidos{% endblock %}
+
+{% block content %}
+    <h2>Lista de Módulos Disponibles Para Administrar</h2>
+    <h4>Haz click en el que deseas administrar</h4>
+    <div class="row">
+        <div class="card text-bg-primary mb-3 mx-2" style="max-width: 18rem;">
+            <div class="card-header">Roles</div>
+            <div class="card-body">
+                <h5 class="card-title">Lista de Roles</h5>
+                <p class="card-text">
+                    <a href="{{BASE}}roles" class="btn btn-light">Ingresar</a>
+                </p>
+            </div>
+        </div>
+        <div class="card text-bg-primary mb-3 mx-2" style="max-width: 18rem;">
+            <div class="card-header">Usuarios</div>
+            <div class="card-body">
+                <h5 class="card-title">Lista de Usuarios</h5>
+                <p class="card-text">
+                    <a href="{{BASE}}usuarios" class="btn btn-light">Ingresar</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

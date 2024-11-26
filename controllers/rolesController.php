@@ -5,6 +5,8 @@ class rolesController extends Controller
 {
     public function __construct()
     {
+        $this->validateSession();
+        $this->validateRol(['Administrador']);
         parent::__construct();
     }
 
@@ -36,7 +38,8 @@ class rolesController extends Controller
             'role' => Session::get('data'),
             'action' => 'create',
             'send' => $this->encrypt($this->getForm()),
-            'process' => 'roles/store'
+            'process' => 'roles/store',
+            'back' => 'roles/index'
         ];
 
         $this->_view->load('roles/create', compact('options','msg_success','msg_error'));
@@ -95,7 +98,8 @@ class rolesController extends Controller
             'role' => Role::find(Filter::filterInt($id)),
             'action' => 'edit',
             'send' => $this->encrypt($this->getForm()),
-            'process' => "roles/update/{$id}"
+            'process' => "roles/update/{$id}",
+            'back' => 'roles/index'
         ];
 
         $this->_view->load('roles/edit', compact('options','msg_success','msg_error'));

@@ -6,11 +6,13 @@ class usuariosController extends Controller
 {
     public function __construct()
     {
+        $this->validateSession();
         parent::__construct();
     }
 
     public function index()
     {
+        $this->validateRol(['Administrador','Editor']);
         list($msg_success, $msg_error) = $this->getMessages();
 
         $options = [
@@ -28,6 +30,7 @@ class usuariosController extends Controller
 
     public function create()
     {
+        $this->validateRol(['Administrador']);
         list($msg_success, $msg_error) = $this->getMessages();
 
         $options = [
@@ -37,7 +40,8 @@ class usuariosController extends Controller
             'action' => 'create',
             'send' => $this->encrypt($this->getForm()),
             'process' => 'usuarios/store',
-            'roles' => Role::select('id','nombre')->orderBy('nombre')->get()
+            'roles' => Role::select('id','nombre')->orderBy('nombre')->get(),
+            'back' => 'usuarios/index'
         ];
 
         $this->_view->load('usuarios/create', compact('options','msg_success','msg_error'));
@@ -45,6 +49,7 @@ class usuariosController extends Controller
 
     public function store()
     {
+        $this->validateRol(['Administrador']);
         #print_r($_POST);exit;
         $this->validateForm('usuarios/create',[
             'run' => Filter::getText('run'),
@@ -97,6 +102,7 @@ class usuariosController extends Controller
 
     public function show($id = null)
     {
+        $this->validateRol(['Administrador','Editor']);
         Validate::validateModel(Usuario::class, $id, 'error/error');
         list($msg_success, $msg_error) = $this->getMessages();
 
@@ -113,6 +119,7 @@ class usuariosController extends Controller
 
     public function edit($id = null)
     {
+        $this->validateRol(['Administrador']);
         Validate::validateModel(Usuario::class, $id, 'error/error');
         list($msg_success, $msg_error) = $this->getMessages();
 
@@ -123,7 +130,8 @@ class usuariosController extends Controller
             'action' => 'edit',
             'send' => $this->encrypt($this->getForm()),
             'process' => "usuarios/update/{$id}",
-            'roles' => Role::select('id','nombre')->orderBy('nombre')->get()
+            'roles' => Role::select('id','nombre')->orderBy('nombre')->get(),
+            'back' => 'usuarios/index'
         ];
 
         $this->_view->load('usuarios/edit', compact('options','msg_success','msg_error'));
@@ -131,6 +139,7 @@ class usuariosController extends Controller
 
     public function update($id = null)
     {
+        $this->validateRol(['Administrador']);
         #print_r($_POST);exit;
         Validate::validateModel(Usuario::class, $id, 'error/error');
         $this->validatePUT();

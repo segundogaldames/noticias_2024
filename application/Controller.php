@@ -165,12 +165,12 @@ class Controller
 			}
 		}
 
-		$this->redirect();
+		$this->redirect('error/denied');
 	}
 
 	#metodo que verifica la autenticacion de un usuario
 	protected function validateSession(){
-		if (!Session::get('autenticate')) {
+		if (!Session::get('authenticate')) {
 			$this->redirect('login/login');
 		}
 

@@ -1,0 +1,36 @@
+{% extends "layout/default/template.twig" %}
+{% block title %}
+	{{options.title}}
+{% endblock %}
+
+{% block content %}
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-header">
+				{{options.subject}}
+			</div>
+			<div class="card-body">
+				{% include "partials/_messages.twig" %}
+				<p class="text-danger">Campos obligatorios con *</p>
+				<form action="{{BASE}}{{options.process}}" method="post">
+					<div class="mb-3">
+						<label for="email" class="form-label">Email
+							<span class="text-danger">*</span>
+						</label>
+						<input name="email" type="email" value="{{options.usuario.email|default("")}}" class="form-control" id="email" aria-describedby="email">
+						<div id="email" class="form-text text-danger">Ingresa el email del usuario</div>
+					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password
+							<span class="text-danger">*</span>
+						</label>
+						<input name="password" type="password" class="form-control" id="password" aria-describedby="password">
+						<div id="password" class="form-text text-danger">Ingresa el password del usuario</div>
+					</div>
+					<input type="hidden" name="send" value="{{options.send}}">
+					<button type="submit" class="btn btn-primary">Ingresar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
